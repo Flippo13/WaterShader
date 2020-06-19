@@ -1,15 +1,16 @@
+#include <SFML/Graphics.hpp>
+
 #include "WaterFrameBuffer.hpp"
 
-constexpr auto REFLECTION_WIDTH = 320;
-constexpr auto REFLECTION_HEIGHT = 180; 
+constexpr auto reflection_width = 320;
+constexpr auto reflection_height = 180; 
 
-constexpr auto REFRACTION_WIDTH = 1280; 
-constexpr auto REFRACTION_HEIGHT = 720;
+constexpr auto refraction_width = 1280; 
+constexpr auto refraction_height = 720;
 
 
-
-WaterFrameBuffer::WaterFrameBuffer() {
-
+WaterFrameBuffer::WaterFrameBuffer(sf::RenderWindow * aWindow): _window(aWindow) {
+	assert(_window != NULL);
 }
 
 WaterFrameBuffer::~WaterFrameBuffer() {
@@ -17,46 +18,55 @@ WaterFrameBuffer::~WaterFrameBuffer() {
 	
 void WaterFrameBuffer::Clear()
 {
-
+	glDeleteFramebuffers(1, &_reflectionFrameBuffer);
+	glDeleteTextures(1, &_reflectionTexture);
+	glDeleteRenderbuffers(1, &_reflectionDepthBuffer);
+	glDeleteFramebuffers(1, &_refractionFrameBuffer);
+	glDeleteTextures(1, &_refractionTexture);
+	glDeleteTextures(1, &_refractionDepthBuffer);
 }
 
 void WaterFrameBuffer::BindReflectionFrameBuffer()
 {
-
+	BindFrameBuffer(_reflectionFrameBuffer, reflection_width, reflection_height);
 }
 
 void WaterFrameBuffer::BindRefractionFrameBuffer()
 {
-
+	BindFrameBuffer(_refractionFrameBuffer, refraction_width, refraction_height);
 }
 
 void WaterFrameBuffer::UnbindCurrentFrameBuffer()
 {
-
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glViewport(0, 0, _window->getSize().x, _window->getSize().y);
 }
 
 int WaterFrameBuffer::GetReflectionTexture()
 {
-
+	return _reflectionTexture;
 }
 
 int WaterFrameBuffer::GetRefractionTexture(){
+	return _refractionTexture;
 }
 int WaterFrameBuffer::GetRefractionDepthTexture() {
+	return _refractionDepthBuffer;
 }
 
 void WaterFrameBuffer::InitializeReflectionFrameBuffer() {
 }
 void WaterFrameBuffer::InitializeRefractionFrameBuffer() {
-	refractionFrameBuffer = CreateFrameBuffer();
-	refractionTexture = CreateTextureAttachment()
-
+	_refractionFrameBuffer = CreateFrameBuffer();
+	_refractionTexture = CreateTextureAttachment(reflection_width,reflection_height);
+	_refractionDepthBuffer = CreateDepthTextureAttachment(refraction_width, refraction_height);
+	UnbindCurrentFrameBuffer();
 }
 
 
-int WaterFrameBuffer::BindFrameBuffer(int framebuffer, int width, int height) {
+void WaterFrameBuffer::BindFrameBuffer(int framebuffer, int width, int height) {
 	glBindTexture(GL_TEXTURE, 0);
-	glBindFramebuffer(GL_FRAMEBUFFER,0);
+	glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
 	glViewport(0, 0, width, height);
 }
 int	WaterFrameBuffer::CreateFrameBuffer() {

@@ -34,8 +34,8 @@ void WaterMaterial::_lazyInitializeShader()
 {
 	if (!_shader) {
 		_shader = new ShaderProgram();
-		_shader->addShader(GL_VERTEX_SHADER, config::MGE_SHADER_PATH + "water.vs");
-		_shader->addShader(GL_FRAGMENT_SHADER, config::MGE_SHADER_PATH + "water.fs");
+		_shader->addShader(GL_VERTEX_SHADER, config::MGE_SHADER_PATH + "water2.vs");
+		_shader->addShader(GL_FRAGMENT_SHADER, config::MGE_SHADER_PATH + "water2.fs");
 		_shader->finalize();
 
 		//cache all the uniform and attribute indexes
@@ -60,6 +60,26 @@ void WaterMaterial::render(World * pWorld, Mesh * pMesh, const glm::mat4 & pMode
 	//    std::cout << "TextureMaterial has discovered light is at position:" << pWorld->getLightAt(0)->getLocalPosition() << std::endl;
 	//}
 
+	//set the material color
+	glUniform3fv(_shader->getUniformLocation("diffuseColor"), 1, glm::value_ptr(glm::vec4(0,0,1,1)));
+
+	//pass in all MVP matrices separately
+	glUniformMatrix4fv(_shader->getUniformLocation("projectionMatrix"), 1, GL_FALSE, glm::value_ptr(pProjectionMatrix));
+	glUniformMatrix4fv(_shader->getUniformLocation("viewMatrix"), 1, GL_FALSE, glm::value_ptr(pViewMatrix));
+	glUniformMatrix4fv(_shader->getUniformLocation("modelMatrix"), 1, GL_FALSE, glm::value_ptr(pModelMatrix));
+
+	//now inform mesh of where to stream its data
+	pMesh->streamToOpenGL(
+		_shader->getAttribLocation("vertex"),
+		_shader->getAttribLocation("normal"),
+		_shader->getAttribLocation("uv")
+	);
+
+
+
+	/*
+	 * 
+	 
 	//setup texture slot 0
 	glActiveTexture(GL_TEXTURE0);
 	//bind the texture to the current active slot
@@ -94,7 +114,7 @@ void WaterMaterial::render(World * pWorld, Mesh * pMesh, const glm::mat4 & pMode
 	glUniform3f(_shader->getUniformLocation("eyePos"), glm::float1(eyePos.x), glm::float1(eyePos.y), glm::float1(eyePos.z));
 	//now inform mesh of where to stream its data
 	pMesh->streamToOpenGL(_aVertex, _aNormal, _aUV);
-
+	*/
 }
 
 	void WaterMaterial::setDiffuseTexture(Texture* pDiffuseTexture)

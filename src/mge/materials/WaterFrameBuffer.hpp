@@ -1,3 +1,5 @@
+#include <SFML/Graphics.hpp>
+
 #include "mge/materials/AbstractMaterial.hpp"
 #include "GL/glew.h"
 
@@ -6,7 +8,7 @@ class Texture;
 
 class WaterFrameBuffer {
 public:
-	 WaterFrameBuffer();
+	 WaterFrameBuffer(sf::RenderWindow* aWindow);
 	~WaterFrameBuffer();
 	
 	void Clear(); 
@@ -20,13 +22,23 @@ private:
 
 	void InitializeReflectionFrameBuffer(); 
 	void InitializeRefractionFrameBuffer(); 
-	int BindFrameBuffer(int framebuffer, int width, int height);
+	void BindFrameBuffer(int framebuffer, int width, int height);
 	int CreateFrameBuffer(); 
 	int CreateTextureAttachment(int width, int height); 
 	int CreateDepthTextureAttachment(int width, int height); 
 
-	int refractionFrameBuffer;
-	int refractionTexture; 
+	unsigned int _refractionFrameBuffer;
+	unsigned int _refractionTexture; 
+	unsigned int _refractionDepthBuffer; 
+	
+	
+	unsigned int _reflectionFrameBuffer;
+	unsigned int _reflectionTexture;
+	unsigned int _reflectionDepthBuffer;
 
-	int reflectionFrameBuffer;
+	sf::RenderWindow* _window;
+
+	WaterFrameBuffer(const WaterFrameBuffer&);
+	WaterFrameBuffer& operator=(const WaterFrameBuffer&);
+
 };
