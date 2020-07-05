@@ -31,8 +31,8 @@ GLint WaterMaterial::_aVertex = 0;
 GLint WaterMaterial::_aNormal = 0;
 GLint WaterMaterial::_aUV = 0;
 
-constexpr auto dudv_map = "dudvMap.jpg";
-constexpr auto normalMap = "normalMap.jpg";
+constexpr auto dudv_map = "waterDuDv.png";
+constexpr auto normalMap = "waterNormalMap.png";
 constexpr auto water = "water.jpg";
 
 

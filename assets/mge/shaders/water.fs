@@ -43,9 +43,9 @@ in vec3 eyePos;
 
 out vec4 fragment_color;
 
-const float waveStrength = 0.02f;
-const float shineDamper = 20.0f; 
-const float reflectivity = 0.5f;
+const float waveStrength = 0.03f;
+const float shineDamper = 32.0f; 
+const float reflectivity = 0.4f;
 
 vec3 CalcDirectLight (DirectLight light, vec3 normal, vec3 viewDir) {
 	vec3 lightDir = normalize(-light.direction); 
@@ -107,25 +107,27 @@ void main( void ) {
 	vec3 normal = vec3(normalMapColor.r * 2.0 - 1.0, normalMapColor.g * 3.0, normalMapColor.b * 2.0 - 1.0);
 	normal = normalize(normal);
 
+	//vec3 viewDir = normalize(eyePos - worldPos.xyz);
+
 	vec3 viewVector = normalize(toCameraVector);
 	float refractiveFactor = dot(viewVector, normal);
+	refractiveFactor = pow(refractiveFactor, 0.5);
 
-	vec3 viewDir = normalize(eyePos - worldPos.xyz);
-	vec3 lightResult;// = CalcDirectLight(directLight, normal, toCameraVector); 
+	vec3 lightResult = CalcDirectLight(directLight, normal, viewVector); 
 
 	for(int i = 0; i < numLights && i < MAX_POINT_LIGHTS; i++) {
-		lightResult += CalcPointLight(pointLights[i], normal, worldPos.xyz, viewVector);
+		//lightResult += CalcPointLight(pointLights[i], normal, worldPos.xyz, viewVector);
 	}
 
 
 	//vec3 reflectedLight = reflect(normalize(fromLightVector), normal); 
 	//float specular = max(dot(reflectedLight, viewVector), 0.0);
 	//specular = pow(specular, shineDamper); 
-	vec3 specularHighlights = lightResult;//  * specular * reflectivity;// * clamp(waterDepth / 50.0,0.0,1.0); 
+	vec3 specularHighlights = lightResult * reflectivity;//  * specular * reflectivity;// * clamp(waterDepth / 50.0,0.0,1.0); 
 
-	fragment_color = mix(reflectColor, refractColor,refractiveFactor);
-	//fragment_color = vec4(reflectColor);
-	fragment_color = mix(fragment_color, vec4(0.1,0.4,0.6, 1.0),0.3) + vec4(specularHighlights, 1.0);
+	//fragment_color = mix(reflectColor, refractColor,refractiveFactor);
+	fragment_color = vec4(refractColor);
+	//fragment_color = mix(fragment_color, vec4(0.0,0.2,0.5, 1.0),0.2) + vec4(specularHighlights, 0.0);
 
 	//fragment_color.a = clamp(waterDepth / 5.0,0.0,1.0); 
 	//fragment_color = vec4(waterDepth/50.0);

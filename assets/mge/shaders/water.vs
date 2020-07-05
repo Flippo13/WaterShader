@@ -80,7 +80,7 @@ vec3 waveNormal(float x, float y) {
 void main( void ){
 
     vec4 pos = vec4(vertex,1.0);
-    pos.y = waveHeight(pos.x,pos.z);
+   // pos.y = waveHeight(pos.x,pos.z);
     
         worldPos = modelMatrix * vec4(vec3(vertex.x, 0.0, vertex.z),1.0);
 		vec4 posRelativeToCamera = viewMatrix * worldPos;
@@ -88,10 +88,10 @@ void main( void ){
 
     eyePosition = eyePos;
     position = pos.xyz / pos.w;
-    worldNormal = waveNormal(pos.x, pos.z);
+  //  worldNormal = waveNormal(pos.x, pos.z);
     eyeNormal = gl_NormalMatrix * worldNormal;
     gl_Position = clipSpace;
-	texCoord = vec2 (vertex.x / 2.0 + 0.5, vertex.z/ 2.0 + 0.5) * 6;
+	texCoord = vec2 (vertex.x / 2.0 + 0.5, vertex.z/ 2.0 + 0.5) * 2;
     toCameraVector = eyePos - worldPos.xyz;
     fromLightVector = worldPos.xyz - lightPosition;
 }

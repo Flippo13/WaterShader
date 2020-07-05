@@ -6,8 +6,8 @@
 constexpr auto reflection_width = 256;
 constexpr auto reflection_height = 256; 
 
-constexpr auto refraction_width = 800;
-constexpr auto refraction_height = 600;
+constexpr auto refraction_width = 1920;
+constexpr auto refraction_height = 1080;
 
 
 WaterFrameBuffer::WaterFrameBuffer(sf::RenderWindow * aWindow): _window(aWindow), 
