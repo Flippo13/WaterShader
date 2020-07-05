@@ -6,7 +6,7 @@
 class ShaderProgram;
 class Texture;
 
-class WaterFrameBuffer {
+class WaterFrameBuffer{
 public:
 	 WaterFrameBuffer(sf::RenderWindow* aWindow);
 	~WaterFrameBuffer();
@@ -23,9 +23,12 @@ private:
 	void InitializeReflectionFrameBuffer(); 
 	void InitializeRefractionFrameBuffer(); 
 	void BindFrameBuffer(int framebuffer, int width, int height);
-	int CreateFrameBuffer(); 
-	int CreateTextureAttachment(int width, int height); 
-	int CreateDepthTextureAttachment(int width, int height); 
+	GLuint CreateFrameBuffer(); 
+	int CreateFrameBufferTex();
+	GLuint CreateTextureAttachment(int width, int height); 
+	GLuint CreateDepthTextureAttachment(int width, int height); 
+	GLuint CreateDepthBufferAttachment(int width, int height);
+	Texture* CreateTextureAttachmentTex(int width, int height);
 
 	unsigned int _refractionFrameBuffer;
 	unsigned int _refractionTexture; 
@@ -35,6 +38,8 @@ private:
 	unsigned int _reflectionFrameBuffer;
 	unsigned int _reflectionTexture;
 	unsigned int _reflectionDepthBuffer;
+
+
 
 	sf::RenderWindow* _window;
 

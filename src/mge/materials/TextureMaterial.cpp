@@ -46,8 +46,8 @@ void TextureMaterial::setDiffuseTexture (Texture* pDiffuseTexture) {
     _diffuseTexture = pDiffuseTexture;
 }
 
-void TextureMaterial::render(World* pWorld, Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix) {
-    if (!_diffuseTexture) return;
+void TextureMaterial::render(World* pWorld, Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix, glm::vec4& pClipPlanePosition) {
+	if (!_diffuseTexture) return;
 
     _shader->use();
 
@@ -67,6 +67,11 @@ void TextureMaterial::render(World* pWorld, Mesh* pMesh, const glm::mat4& pModel
     //pass in a precalculate mvp matrix (see texture material for the opposite)
     glm::mat4 mvpMatrix = pProjectionMatrix * pViewMatrix * pModelMatrix;
     glUniformMatrix4fv ( _uMVPMatrix, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
+
+	glUniformMatrix4fv(_shader->getUniformLocation("modelMatrix"), 1, GL_FALSE, glm::value_ptr(pModelMatrix));
+
+	glm::vec4 planeLocation = pClipPlanePosition;
+	glUniform4f(_shader->getUniformLocation("plane"), planeLocation.x, planeLocation.y, planeLocation.z, planeLocation.w);
 
     //now inform mesh of where to stream its data
     pMesh->streamToOpenGL(_aVertex, _aNormal, _aUV);

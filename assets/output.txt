@@ -1,0 +1,544 @@
+Starting Game
+Initializing engine...
+
+Initializing window...
+Window initialized.
+
+Context info:
+----------------------------------
+GL Vendor : ATI Technologies Inc.
+GL Renderer : AMD Radeon(TM) Vega 8 Graphics
+GL Version (string) : 3.3.13558 Compatibility Profile Context 26.20.11008.6001
+GL Version (integer) : 3.3
+GLSL Version : 4.60
+----------------------------------
+
+Initializing GLEW...
+Initialized GLEW, status (1 == OK, 0 == FAILED):1
+
+Initializing renderer...
+Renderer done.
+
+Initializing world...
+World initialized.
+
+Loading mge/models/plane20x20_2048tris_aligned_uvs.obj...Mesh loaded and buffered:2048 triangles.
+Loading mge/models/cube_flat.obj...Mesh loaded and buffered:12 triangles.
+Loading mge/models/sphere_smooth.obj...Mesh loaded and buffered:224 triangles.
+
+Program created with id:1
+Reading shader file... mge/shaders/lit.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... mge/shaders/lit.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+
+Program created with id:4
+Reading shader file... mge/shaders/color.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... mge/shaders/color.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+
+Program created with id:7
+Reading shader file... mge/shaders/texture.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... mge/shaders/texture.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+
+Program created with id:10
+Reading shader file... mge/shaders/terrain.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... mge/shaders/terrain.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+
+Program created with id:13
+Reading shader file... mge/shaders/water.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... mge/shaders/water.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+Registering waterplane
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light light
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightRED
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightGREEN
+Registering light lightBAM
+Registering light lightBAM
+
+Engine initialized.
+
+Initializing HUD
+HUD initialized.
+
+0.00287121 ms
+0.00243374 ms
+0.00229017 ms
+0.0022554 ms
+0.00248573 ms
+0.00247344 ms
+0.00272287 ms

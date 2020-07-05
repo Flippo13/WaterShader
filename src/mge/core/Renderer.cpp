@@ -39,10 +39,28 @@ void Renderer::setClearColor(GLbyte pR, GLbyte pG, GLbyte pB) {
 void Renderer::render(World* pWorld) {
 	render(pWorld, pWorld, nullptr, pWorld->getMainCamera(), true);
 }
+void Renderer::renderWater(World* pWorld) {
+	renderWater(pWorld, pWorld, nullptr, pWorld->getMainCamera(), true);
+}
+
+void Renderer::render(World* pWorld, glm::vec4& pClipPlanePosition)
+{
+	render(pWorld, pWorld, nullptr, pClipPlanePosition, pWorld->getMainCamera() ,true);
+}
 
 void Renderer::render(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, Camera* pCamera, bool pRecursive)
 {
 	render(pWorld, pGameObject, pMaterial, pGameObject->getWorldTransform(), glm::inverse(pCamera->getWorldTransform()), pCamera->getProjection(), pRecursive);
+}
+
+void Renderer::renderWater(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, Camera* pCamera, bool pRecursive)
+{
+	renderWater(pWorld, pGameObject, pMaterial, pGameObject->getWorldTransform(), glm::inverse(pCamera->getWorldTransform()), pCamera->getProjection(), pRecursive);
+}
+
+void Renderer::render(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, glm::vec4& pClipPlanePosition, Camera* pCamera, bool pRecursive)
+{
+	render(pWorld, pGameObject, pMaterial, pClipPlanePosition ,pGameObject->getWorldTransform(), glm::inverse(pCamera->getWorldTransform()), pCamera->getProjection(), pRecursive);
 }
 
 void Renderer::render(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix, bool pRecursive) {
@@ -50,8 +68,24 @@ void Renderer::render(World* pWorld, GameObject* pGameObject, AbstractMaterial* 
 	if (pRecursive) renderChildren(pWorld, pGameObject, pMaterial, pModelMatrix, pViewMatrix, pProjectionMatrix, pRecursive);
 }
 
+void Renderer::renderWater(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix, bool pRecursive) {
+	if (pRecursive) renderAllWater(pWorld, pGameObject, pMaterial, pModelMatrix, pViewMatrix, pProjectionMatrix, pRecursive);
+}
+
+void Renderer::render(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, glm::vec4& pClipPlanePosition, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix, bool pRecursive)
+{
+	renderSelf(pWorld, pGameObject, pMaterial == nullptr ? pGameObject->getMaterial() : pMaterial, pClipPlanePosition, pModelMatrix, pViewMatrix, pProjectionMatrix);
+	if (pRecursive) renderChildren(pWorld, pGameObject, pMaterial, pClipPlanePosition ,pModelMatrix, pViewMatrix, pProjectionMatrix, pRecursive);
+}
+
 void Renderer::renderSelf(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix) {
 	render(pWorld, pGameObject->getMesh(), pMaterial, pModelMatrix, pViewMatrix, pProjectionMatrix);
+	if (debug) renderMeshDebugInfo(pGameObject->getMesh(), pModelMatrix, pViewMatrix, pProjectionMatrix);
+}
+
+void Renderer::renderSelf(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, glm::vec4& pClipPlanePosition, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix)
+{
+	render(pWorld, pGameObject->getMesh(), pMaterial, pClipPlanePosition, pModelMatrix, pViewMatrix, pProjectionMatrix);
 	if (debug) renderMeshDebugInfo(pGameObject->getMesh(), pModelMatrix, pViewMatrix, pProjectionMatrix);
 }
 
@@ -67,8 +101,40 @@ void Renderer::renderChildren(World* pWorld, GameObject* pGameObject, AbstractMa
 	}
 }
 
+void Renderer::renderAllWater(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix, bool pRecursive) {
+	int childCount = pWorld->getWaterCount();
+	if (childCount < 1) return;
+
+	GameObject* child = 0;
+	for (int i = 0; i < childCount; i++)
+	{
+		child = pWorld->getWaterAt(i);
+		render(pWorld, child, pMaterial, pModelMatrix * child->getTransform(), pViewMatrix, pProjectionMatrix, pRecursive);
+	}
+}
+
+void Renderer::renderChildren(World* pWorld, GameObject* pGameObject, AbstractMaterial* pMaterial, glm::vec4& pClipPlanePosition, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix, bool pRecursive)
+{
+	int childCount = pGameObject->getChildCount();
+	if (childCount < 1) return;
+
+	//note that with a loop like this, deleting children during rendering is not a good idea :)
+	GameObject* child = 0;
+	for (int i = 0; i < childCount; i++) {
+		child = pGameObject->getChildAt(i);
+		render(pWorld, child, pMaterial, pClipPlanePosition ,pModelMatrix * child->getTransform(), pViewMatrix, pProjectionMatrix, pRecursive);
+	}
+}
+
+
+
 void Renderer::render(World* pWorld, Mesh* pMesh, AbstractMaterial* pMaterial, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix) {
 	if (pMesh != nullptr && pMaterial != nullptr) pMaterial->render(pWorld, pMesh, pModelMatrix, pViewMatrix, pProjectionMatrix);
+}
+
+void Renderer::render(World* pWorld, Mesh* pMesh, AbstractMaterial* pMaterial, glm::vec4& pClipPlanePosition, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix)
+{
+	if (pMesh != nullptr && pMaterial != nullptr) pMaterial->render(pWorld, pMesh, pModelMatrix, pViewMatrix, pProjectionMatrix, pClipPlanePosition);
 }
 
 void Renderer::renderMeshDebugInfo(Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix) {

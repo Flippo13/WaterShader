@@ -22,10 +22,12 @@ class Camera : public GameObject
 
         glm::mat4& getProjection();
 		glm::vec3& getPosition();
-
+		glm::mat4& inversePitch(); 
+		void reflectCamera();
 	private:
 		glm::mat4 _projection;
 		glm::vec3 _position;
+
 
     private:
         Camera (const Camera&);

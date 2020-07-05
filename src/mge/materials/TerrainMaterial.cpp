@@ -59,7 +59,7 @@ void TerrainMaterial::_lazyInitializeShader()
 	}
 }
 
-void TerrainMaterial::render(World* pWorld, Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix)
+void TerrainMaterial::render(World* pWorld, Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix, glm::vec4& pClipPlanePosition)
 {
 	if (!_diffuseTexture || !_heightMapTexture || !_splatMapTexture || !_diffuseTexture2 || !_diffuseTexture3 || !_diffuseTexture4) return;
 
@@ -114,9 +114,13 @@ void TerrainMaterial::render(World* pWorld, Mesh* pMesh, const glm::mat4& pModel
 	//tell the shader the texture slot for the diffuse texture is slot 5 
 	glUniform1i(_uDiffuseTexture4, 5);
 
+	glUniformMatrix4fv(_shader->getUniformLocation("modelMatrix"), 1, GL_FALSE, glm::value_ptr(pModelMatrix));
+
 	//pass in the time for animation
 	glUniform1f(_shader->getUniformLocation("time"), glm::float1(std::clock()));
 
+	glm::vec4 planeLocation = pClipPlanePosition;
+	glUniform4f(_shader->getUniformLocation("plane"), planeLocation.x, planeLocation.y, planeLocation.z, planeLocation.w);
 
 	//pass in a precalculate mvp matrix (see texture material for the opposite)
 	glm::mat4 mvpMatrix = pProjectionMatrix * pViewMatrix * pModelMatrix;

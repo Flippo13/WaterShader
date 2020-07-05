@@ -11,7 +11,8 @@ public:
 	TerrainMaterial(Texture* pHeightMapTexture, Texture* pSplatMapTexture, Texture* pDiffuseTexture, Texture* pDiffuseTexture2, Texture* pDiffuseTexture3, Texture* pDiffuseTexture4);
 	virtual ~TerrainMaterial();
 
-	virtual void render(World* pWorld, Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix) override;
+	virtual void render(World* pWorld, Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix, glm::vec4& pClipPlanePosition = glm::vec4(0,0,0,0)) override;
+
 
 	void setDiffuseTexture(Texture* pDiffuseTexture);
 	void setHeightMap(Texture* pHeightMap);

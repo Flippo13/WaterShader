@@ -1,19 +1,24 @@
 #include <SFML/Graphics.hpp>
+#include "mge/core/Texture.hpp"
 
 #include "WaterFrameBuffer.hpp"
 
-constexpr auto reflection_width = 320;
-constexpr auto reflection_height = 180; 
+constexpr auto reflection_width = 256;
+constexpr auto reflection_height = 256; 
 
-constexpr auto refraction_width = 1280; 
-constexpr auto refraction_height = 720;
+constexpr auto refraction_width = 800;
+constexpr auto refraction_height = 600;
 
 
-WaterFrameBuffer::WaterFrameBuffer(sf::RenderWindow * aWindow): _window(aWindow) {
+WaterFrameBuffer::WaterFrameBuffer(sf::RenderWindow * aWindow): _window(aWindow), 
+_reflectionDepthBuffer(0), _reflectionFrameBuffer(0), _reflectionTexture(0), _refractionDepthBuffer(0), _refractionFrameBuffer(0), _refractionTexture(0) {
 	assert(_window != NULL);
+	InitializeReflectionFrameBuffer();
+	InitializeRefractionFrameBuffer();
 }
 
 WaterFrameBuffer::~WaterFrameBuffer() {
+	Clear();
 }
 	
 void WaterFrameBuffer::Clear()
@@ -55,46 +60,79 @@ int WaterFrameBuffer::GetRefractionDepthTexture() {
 }
 
 void WaterFrameBuffer::InitializeReflectionFrameBuffer() {
+	_reflectionFrameBuffer = CreateFrameBuffer();
+	_reflectionTexture = CreateTextureAttachment(reflection_width, reflection_height);
+	_reflectionDepthBuffer = CreateDepthBufferAttachment(reflection_width, reflection_height);
+	UnbindCurrentFrameBuffer();
 }
 void WaterFrameBuffer::InitializeRefractionFrameBuffer() {
 	_refractionFrameBuffer = CreateFrameBuffer();
-	_refractionTexture = CreateTextureAttachment(reflection_width,reflection_height);
+	_refractionTexture = CreateTextureAttachment(refraction_width, refraction_height);
 	_refractionDepthBuffer = CreateDepthTextureAttachment(refraction_width, refraction_height);
 	UnbindCurrentFrameBuffer();
 }
 
 
 void WaterFrameBuffer::BindFrameBuffer(int framebuffer, int width, int height) {
-	glBindTexture(GL_TEXTURE, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER,framebuffer);
 	glViewport(0, 0, width, height);
 }
-int	WaterFrameBuffer::CreateFrameBuffer() {
-	unsigned int fbo; 
+GLuint	WaterFrameBuffer::CreateFrameBuffer() {
+	GLuint fbo; 
 	glGenFramebuffers(1, &fbo);
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 	return fbo;
 }
-int	WaterFrameBuffer::CreateTextureAttachment(int width, int height) {
-	unsigned int texture;
+
+GLuint	WaterFrameBuffer::CreateTextureAttachment(int width, int height) {
+	GLuint texture;
+
 	glGenTextures(1, &texture);
 	glBindTexture(GL_TEXTURE_2D, texture);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height,
 		0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 	return texture;
 }
-int	WaterFrameBuffer::CreateDepthTextureAttachment(int width, int height)
+
+Texture* WaterFrameBuffer::CreateTextureAttachmentTex(int width, int height) {
+	Texture* texture = Texture::createTexture();
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height,
+		0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture->getId(), 0);
+	return texture;
+}
+
+GLuint	WaterFrameBuffer::CreateDepthTextureAttachment(int width, int height)
 {
-	unsigned int rbo;
-	glGenRenderbuffers(1, &rbo);
-	glBindRenderbuffer(GL_RENDERBUFFER, rbo);
+	GLuint texture;
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture, 0);
+	glDrawBuffer(GL_NONE); 
+	glReadBuffer(GL_NONE);
+	return texture;
+}
+
+GLuint WaterFrameBuffer::CreateDepthBufferAttachment(int width, int height) {
+	GLuint depthBuffer;
+	glGenRenderbuffers(1, &depthBuffer);
+	glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
 	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
-	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT,
-		GL_RENDERBUFFER, rbo);
-	return rbo;
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
+
+	return depthBuffer;
 }

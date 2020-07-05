@@ -15,6 +15,20 @@ glm::vec3& Camera::getPosition() {
 	return _position;
 }
 
+glm::mat4& Camera::inversePitch()
+{
+	glm::mat4 reflectionMatrix = glm::inverse(glm::scale(glm::vec3(1, -1, 1)) * glm::inverse(getWorldTransform()) * glm::scale(glm::vec3(1, -1, 1)));
+
+	return reflectionMatrix;
+	//setTransform(reflectionMatrix);
+}
+
+void Camera::reflectCamera()
+{
+	glm::mat4 reflectionMatrix = glm::inverse(glm::scale(glm::vec3(1, -1, 1)) * glm::inverse(getWorldTransform()) * glm::scale(glm::vec3(1, -1, 1)));// * glm::scale(glm::vec3(1, -1, 1));
+	setTransform(reflectionMatrix);
+}
+
 glm::mat4& Camera::getProjection() {
     return _projection;
 }

@@ -1,6 +1,8 @@
 #ifndef ABSTRACTGAME_HPP
 #define ABSTRACTGAME_HPP
 
+#include "glm.hpp"
+
 #include <SFML/Graphics.hpp>
 #include <GL/glew.h>
 #include <string>
@@ -25,6 +27,7 @@ class AbstractGame
         //run the actual process of updating all objects, rendering them and processing events
         virtual void run();
 
+		virtual void setLightAmount(int pRows, int pCollumns);
     protected:
 
         //methods above delegate behaviour to the methods below so that you can override it in a subclass
@@ -47,6 +50,10 @@ class AbstractGame
         virtual void _update(float pStep);
         //render all game objects in the display root
         virtual void _render();
+		//render all water game objects
+		virtual void _renderWater();
+		//render all game objects with clipPlane
+		virtual void _render(glm::vec4&);
         //process any sfml window events (see SystemEventDispatcher/Listener)
         virtual void _processEvents();
 
@@ -55,6 +62,9 @@ class AbstractGame
 		World* _world;              //the root game object that represents our scene
 		float _fps;                 //stores the real fps
 
+		unsigned int _fpsStart; 
+		unsigned int _fpsFrames; 
+		unsigned int _frameTime; 
     private:
         AbstractGame(const AbstractGame&);
         AbstractGame& operator=(const AbstractGame&);

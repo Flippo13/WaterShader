@@ -52,7 +52,7 @@ void main( void ) {
     float distance = length( Vertex - light.lightPosition );
 
     float attenuation = 1.0f/(light.constent + light.linear * distance + light.quadratic * (distance * distance));
-//    ambient *= attenuation; 
+   //ambient *= attenuation; 
     diffuse *= attenuation;  
     vec3 result = vec3(0,0,0);
     result = result + (ambient + diffuse); 

@@ -21,9 +21,16 @@ class World : public GameObject
         Light* getLightAt (int pIndex);
         int getLightCount();
 
+		void registerWater(GameObject* pWater); 
+		void unregisterWater(GameObject* pWater);
+
+		GameObject* getWaterAt(int pIndex);
+		int getWaterCount();
+
 	private:
 	    Camera* _mainCamera;
 	    std::vector<Light*> _lights;
+		std::vector<GameObject*> _waters;
 
         World(const World&);
         World& operator=(const World&);

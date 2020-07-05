@@ -6,14 +6,15 @@
 
 class ShaderProgram;
 class Texture; 
+class WaterFrameBuffer;
 
 class WaterMaterial : public AbstractMaterial
 {
 public:
-	WaterMaterial(Texture* pDiffuseTexture);
+	WaterMaterial(WaterFrameBuffer* pFrameBuffer);
 	virtual ~WaterMaterial();
 
-	virtual void render(World* pWorld, Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix) override;
+	virtual void render(World* pWorld, Mesh* pMesh, const glm::mat4& pModelMatrix, const glm::mat4& pViewMatrix, const glm::mat4& pProjectionMatrix, glm::vec4& pClipPlanePosition = glm::vec4(0, 0, 0, 0)) override;
 
 
 	void setHeightMap(Texture* pHeightTexture); 
@@ -27,12 +28,21 @@ private:
 
 	static GLint _uMVPMatrix; 
 	static GLint _uDiffuseTexture; 
+	static GLint _uReflectionTexture; 
+	static GLint _uRefractionTexture; 
+	static GLint _uRefractiveDepthTexture; 
+
+	static GLint _uDuDvTexture;
+	static GLint _uNormalMap; 
 
 	static GLint _aVertex; 
 	static GLint _aNormal; 
 	static GLint _aUV; 
 
+	WaterFrameBuffer* _fbo; 
+	Texture* _dudvTexture; 
 	Texture* _diffuseTexture; 
+	Texture* _normalMap; 
 
 	WaterMaterial(const WaterMaterial &);
 	WaterMaterial& operator=(const WaterMaterial&);

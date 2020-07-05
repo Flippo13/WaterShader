@@ -17,6 +17,9 @@ GLuint Texture::getId() {
 	return _id;
 }
 
+void Texture::setId(GLuint newId) {
+	_id = newId;
+}
 // importer for textures
 Texture* Texture::load(const std::string& pFilename)
 {
@@ -38,6 +41,21 @@ Texture* Texture::load(const std::string& pFilename)
         return nullptr;
     }
 }
+
+int Texture::create()
+{
+	Texture* texture = new Texture();
+	glBindTexture(GL_TEXTURE_2D, texture->getId());
+	return texture->getId();
+}
+
+Texture* Texture::createTexture()
+{
+	Texture* texture = new Texture();
+	//glBindTexture(GL_TEXTURE_2D, texture->getId());
+	return texture;
+}
+
 
 
 

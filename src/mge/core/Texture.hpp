@@ -9,8 +9,11 @@ class Texture
 {
 	public:
 		static Texture* load(const std::string& pTexturePath);
+		static int create();
+		static Texture* createTexture();
 
 		GLuint getId();
+		void setId(GLuint newId);
 
 	protected:
 	    Texture();

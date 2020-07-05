@@ -1,0 +1,204 @@
+Well what number: 1	3
+Starting Game
+lights: 3
+Initializing engine...
+
+Initializing window...
+Window initialized.
+
+Context info:
+----------------------------------
+GL Vendor : ATI Technologies Inc.
+GL Renderer : AMD Radeon(TM) Vega 8 Graphics
+GL Version (string) : 3.3.13558 Compatibility Profile Context 26.20.11008.6001
+GL Version (integer) : 3.3
+GLSL Version : 4.60
+----------------------------------
+
+Initializing GLEW...
+Initialized GLEW, status (1 == OK, 0 == FAILED):1
+
+Initializing renderer...
+Renderer done.
+
+Initializing world...
+World initialized.
+
+Loading C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/models/plane20x20_2048tris_aligned_uvs.obj...Mesh loaded and buffered:2048 triangles.
+Loading C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/models/cube_flat.obj...Mesh loaded and buffered:12 triangles.
+Loading C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/models/sphere_smooth.obj...Mesh loaded and buffered:224 triangles.
+Loading C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/models/suzanna_smooth.obj...Mesh loaded and buffered:968 triangles.
+
+Program created with id:1
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/lit.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/lit.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+
+Program created with id:4
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/color.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/color.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+
+Program created with id:7
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/texture.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/texture.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+
+Program created with id:10
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/terrain.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/terrain.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+
+Program created with id:13
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/water.vs
+Compiling shader... 
+Shader compiled ok.
+Reading shader file... C:/Users/Felix/Documenten/Saxion/Advanced_Tools/mge_v19_student_version/assets/mge/shaders/water.fs
+Compiling shader... 
+Shader compiled ok.
+Program linked ok.
+
+Registering waterplane
+Registering light light1
+Registering light light2
+Registering light light3
+
+Engine initialized.
+
+Initializing HUD
+HUD initialized.
+
+NUM 1	0.000152685
+NUM 2	0.00188702
+NUM 3	0.00196214
+NUM 4	0.00201401
+NUM 5	0.00202161
+NUM 6	0.00188156
+NUM 7	0.00209254
+NUM 8	0.00209229
+NUM 9	0.00176379
+NUM 10	0.0019134
+NUM 11	0.00181419
+NUM 12	0.00174142
+NUM 13	0.0017432
+NUM 14	0.00174734
+NUM 15	0.00172015
+NUM 16	0.0017084
+NUM 17	0.00190678
+NUM 18	0.00186631
+NUM 19	0.00174599
+NUM 20	0.00166693
+NUM 21	0.00178737
+NUM 22	0.00169529
+NUM 23	0.00181674
+NUM 24	0.00183085
+NUM 25	0.00171194
+NUM 26	0.00167778
+NUM 27	0.00178728
+NUM 28	0.00176667
+NUM 29	0.00189219
+NUM 30	0.00204739
+NUM 31	0.00184083
+NUM 32	0.00189453
+NUM 33	0.00190849
+NUM 34	0.00193421
+NUM 35	0.00190834
+NUM 36	0.00191688
+NUM 37	0.00179153
+NUM 38	0.00180315
+NUM 39	0.00171042
+NUM 40	0.00184269
+NUM 41	0.00173989
+NUM 42	0.00178695
+NUM 43	0.001699
+NUM 44	0.00166696
+NUM 45	0.00172808
+NUM 46	0.00167869
+NUM 47	0.00162704
+NUM 48	0.00169867
+NUM 49	0.00172109
+NUM 50	0.00183377
+NUM 51	0.00191811
+NUM 52	0.00196319
+NUM 53	0.00184111
+NUM 54	0.00189572
+NUM 55	0.0017541
+NUM 56	0.00180158
+NUM 57	0.00184155
+NUM 58	0.00177367
+NUM 59	0.00171497
+NUM 60	0.00182231
+NUM 61	0.00184134
+NUM 62	0.00187779
+NUM 63	0.00182736
+NUM 64	0.00167533
+NUM 65	0.00180651
+NUM 66	0.00186926
+NUM 67	0.00192321
+NUM 68	0.0019076
+NUM 69	0.0017981
+NUM 70	0.00171744
+NUM 71	0.00179632
+NUM 72	0.00170385
+NUM 73	0.0017778
+NUM 74	0.00169571
+NUM 75	0.00170331
+NUM 76	0.0017343
+NUM 77	0.00188327
+NUM 78	0.00206635
+NUM 79	0.001778
+NUM 80	0.00191385
+NUM 81	0.00178171
+NUM 82	0.00180573
+NUM 83	0.00186264
+NUM 84	0.00211494
+NUM 85	0.00189829
+NUM 86	0.00193193
+NUM 87	0.00198218
+NUM 88	0.0018006
+NUM 89	0.00179089
+NUM 90	0.00174172
+NUM 91	0.00182025
+NUM 92	0.00183365
+NUM 93	0.00182381
+NUM 94	0.00186289
+NUM 95	0.00183462
+NUM 96	0.00206672
+NUM 97	0.00200512
+NUM 98	0.00196316
+NUM 99	0.00182867
+NUM 100	0.00192496
+NUM 101	0.00201345
+NUM 102	0.00179233
+NUM 103	0.00186501
+NUM 104	0.00185785
+NUM 105	0.00180012
+NUM 106	0.00210438
+GC running on:root
+GC running on:camera
+Unregistering light light1
+GC running on:light1
+Unregistering light light2
+GC running on:light2
+Unregistering light light3
+GC running on:light3

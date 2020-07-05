@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "glm.hpp"
+
 #include "AbstractGame.hpp"
 #include "mge/core/Renderer.hpp"
 #include "mge/core/World.hpp"
@@ -87,7 +89,12 @@ void AbstractGame::run()
 {
     //setting to calculate fps
 	sf::Clock renderClock;
+	sf::Clock fpsClock;
+	_fpsStart = fpsClock.getElapsedTime().asMilliseconds();
+
+
     int frameCount = 0;
+	//float lastTime = fpsClock.
     float timeSinceLastFPSCalculation = 0;
 
 	//settings to make sure the update loop runs at 60 fps
@@ -97,6 +104,16 @@ void AbstractGame::run()
 
 	while (_window->isOpen()) {
 		timeSinceLastUpdate += updateClock.restart();
+		
+		
+		_fpsFrames++; 
+		float currentTime = fpsClock.getElapsedTime().asSeconds();
+		if (currentTime - _fpsStart >= 1.0f) {
+			std::cout << "NUM " << _fpsStart + 1 << "\t" << 1000.0 / float(_fpsFrames) << std::endl;
+
+			_fpsFrames = 0;
+			_fpsStart += 1.0;
+		}
 
 		if (timeSinceLastUpdate > timePerFrame)
 		{
@@ -109,21 +126,33 @@ void AbstractGame::run()
 
             _render();
             _window->display();
+			
 
-            //fps count is updated once every 1 second
+            
+			//fps count is updated once every 1 second
             frameCount++;
             timeSinceLastFPSCalculation += renderClock.restart().asSeconds();
             if (timeSinceLastFPSCalculation > 1) {
-                _fps = frameCount/timeSinceLastFPSCalculation;
-                timeSinceLastFPSCalculation -= 1;
+				_fps = frameCount/timeSinceLastFPSCalculation;
+				timeSinceLastFPSCalculation -= 1;
                 frameCount = 0;
             }
 
+			
+
 		}
+
+
+
+		//renderClock.restart().asSeconds();
 
 		//empty the event queue
 		_processEvents();
     }
+}
+
+void AbstractGame::setLightAmount(int pRows,int pCollumns)
+{
 }
 
 void AbstractGame::_update(float pStep) {
@@ -132,6 +161,15 @@ void AbstractGame::_update(float pStep) {
 
 void AbstractGame::_render () {
     _renderer->render(_world);
+}
+
+void AbstractGame::_render(glm::vec4& pClipPlanePosition) {
+	_renderer->render(_world, pClipPlanePosition);
+}
+
+void AbstractGame::_renderWater() {
+	_renderer->renderWater(_world);
+
 }
 
 void AbstractGame::_processEvents()

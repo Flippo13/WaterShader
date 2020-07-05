@@ -20,7 +20,6 @@ OrbitBehaviour::~OrbitBehaviour()
 
 void OrbitBehaviour::update(float pStep)
 {
-
 	_owner->setTransform(
 		glm::inverse(
 			glm::lookAt(_owner->getWorldPosition(), _target->getWorldPosition(), glm::vec3(0, 1, 0))
@@ -50,7 +49,6 @@ void OrbitBehaviour::update(float pStep)
 	{
 		_currentMousePos = sf::Mouse::getPosition();
 	}
-
 }
 
 /*
