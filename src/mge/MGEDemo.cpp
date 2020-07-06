@@ -83,66 +83,49 @@ void MGEDemo::_initializeScene()
 	AbstractMaterial* lightMaterial = new ColorMaterial(glm::vec3(0.7f, 0.3f, 0.4f));
 	AbstractMaterial* bricksMaterial = new TextureMaterial(bricks);
 	AbstractMaterial* grassMaterial = new TextureMaterial(grass);
+	AbstractMaterial* sandMaterial = new TextureMaterial(sand);
+	AbstractMaterial* stonesMaterial = new TextureMaterial(stones);
+
+
 
     AbstractMaterial* runicStoneMaterial = new TextureMaterial (Texture::load (config::MGE_TEXTURE_PATH+"runicfloor.png"));
     AbstractMaterial* terrainMaterial = new TerrainMaterial(heightMap, Texture::load(config::MGE_TEXTURE_PATH + "splatmap.png"), Texture::load(config::MGE_TEXTURE_PATH + "water.jpg"), Texture::load(config::MGE_TEXTURE_PATH + "diffuse1.jpg"), Texture::load(config::MGE_TEXTURE_PATH + "diffuse2.jpg"), Texture::load(config::MGE_TEXTURE_PATH + "diffuse3.jpg"));
 	AbstractMaterial* waterMaterial = new WaterMaterial(fbo);
 
 	//SCENE SETUP
-	Camera* camera = new Camera("camera", glm::vec3(0, 30, 0));
-	camera->rotate(glm::radians(-90.0f), glm::vec3(1, 0, 0));
+	Camera* camera = new Camera("camera", glm::vec3(-60, 20, 0));
+	camera->rotate(glm::radians(-90.0f), glm::vec3(0, 1, 0));
+	camera->rotate(glm::radians(-30.0f), glm::vec3(1, 0, 0));
 	_world->add(camera);
 	_world->setMainCamera(camera);
 
 	GameObject* terrain = new GameObject("terrain", glm::vec3(0, -7, 0)); 
-	terrain->scale(glm::vec3(1, 1, 1)); 
+	terrain->scale(glm::vec3(4, 1, 4)); 
 	terrain->setMesh(planeMeshDefault);
 	terrain->setMaterial(terrainMaterial);
 	_world->add(terrain);
 
-
 	//add the floor
 	GameObject* water = new GameObject("plane", glm::vec3(0, 0, 0));
-	water->scale(glm::vec3(1, 1, 1));
+	water->scale(glm::vec3(4, 1, 4));
 	water->setMesh(planeMeshDefault);
 	water->setMaterial(waterMaterial);
-	_world->add(water);
+	_world->registerWater(water);
+	for (int i = 0; i < _lightRows; i++)
+	{
+		for (int j = 0; j < _lightCollumns; j++)
+		{
+			GameObject* suzanna = new GameObject("Suzanna", glm::vec3(40 - i * 2.f, 2, 40 - j * 2.0f));
+			suzanna->scale(glm::vec3(0.5f, 1, 0.5f));
+			suzanna->setMesh(suzannaMeshS);
+			suzanna->setMaterial(bricksMaterial);
+			suzanna->setBehaviour(new RotatingBehaviour());
+			_world->add(suzanna);
+		}
+	}
+	/*
 
-	GameObject* suzanna = new GameObject("Suzanna", glm::vec3(0, 2, 0));
-	suzanna->scale(glm::vec3(1, 1, 1)); 
-	suzanna->setMesh(suzannaMeshS);
-	suzanna->setMaterial(bricksMaterial);
-	suzanna->setBehaviour(new RotatingBehaviour());
-	_world->add(suzanna);
-
-
-	GameObject* suzanna2 = new GameObject("Suzanna", glm::vec3(3, 2, 0));
-	suzanna2->scale(glm::vec3(1, 1, 1));
-	suzanna2->setMesh(suzannaMeshS);
-	suzanna2->setMaterial(grassMaterial);
-	suzanna2->setBehaviour(new RotatingBehaviour());
-	_world->add(suzanna2);
-
-	GameObject* suzanna3 = new GameObject("Suzanna", glm::vec3(-3, 2, 0));
-	suzanna3->scale(glm::vec3(1, 1, 1));
-	suzanna3->setMesh(suzannaMeshS);
-	suzanna3->setMaterial(grassMaterial);
-	suzanna3->setBehaviour(new RotatingBehaviour());
-	//_world->add(suzanna3);
-
-	GameObject* suzanna4 = new GameObject("Suzanna", glm::vec3(0, 2, 3));
-	suzanna4->scale(glm::vec3(1, 1, 1));
-	suzanna4->setMesh(suzannaMeshS);
-	suzanna4->setMaterial(grassMaterial);
-	suzanna4->setBehaviour(new RotatingBehaviour());
-	//_world->add(suzanna4);
-
-	GameObject* suzanna5 = new GameObject("Suzanna", glm::vec3(0, 2, -3));
-	suzanna5->scale(glm::vec3(1, 1, 1));
-	suzanna5->setMesh(suzannaMeshS);
-	suzanna5->setMaterial(grassMaterial);
-	suzanna5->setBehaviour(new RotatingBehaviour());
-	//_world->add(suzanna5);
+	/*
 
 	Light* redLight = new Light(
 		LightType::DIRECTIONAL,
@@ -177,7 +160,6 @@ void MGEDemo::_initializeScene()
 		}
 	}
 	
-	/*
 
 	Light* greenLight = new Light(
 		LightType::POINT,
@@ -221,7 +203,7 @@ void MGEDemo::_initializeScene()
 	*/
 
 
-	camera->setBehaviour(new OrbitBehaviour(10, -90, 0, 5, water));
+	//camera->setBehaviour(new OrbitBehaviour(20, -90, 0, 5, water));
 
 	
 
@@ -230,8 +212,6 @@ void MGEDemo::_initializeScene()
 void MGEDemo::_render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_CLIP_DISTANCE0);
-	//glCullFace(GL_FRONT);
-
 		fbo->BindReflectionFrameBuffer();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -239,15 +219,15 @@ void MGEDemo::_render() {
 		AbstractGame::_render(glm::vec4(0, 1, 0, 0));
 		_world->getMainCamera()->reflectCamera();
 		fbo->UnbindCurrentFrameBuffer();
-		//glCullFace(GL_BACK);
+		
 		fbo->BindRefractionFrameBuffer();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		AbstractGame::_render(glm::vec4(0, -1, 0, 0));
 		fbo->UnbindCurrentFrameBuffer();
-		//glDisable(GL_CLIP_DISTANCE0);
+		glDisable(GL_CLIP_DISTANCE0);
 		AbstractGame::_render(glm::vec4(0, 0, 0, 0));
 
-		//AbstractGame::_renderWater();
+		AbstractGame::_renderWater();
     _updateHud();
 }
 

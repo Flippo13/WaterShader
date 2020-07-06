@@ -19,5 +19,6 @@ void main( void ) {
 	
 
 	fragment_color = mix (reflectColor, refractColor, 0.3);
+	fragment_color = mix(fragment_color,vec4(0.1,0.2,0.6,1.0),0.3);
 
 }

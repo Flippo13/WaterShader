@@ -47,7 +47,6 @@ WaterMaterial::WaterMaterial(WaterFrameBuffer* pFrameBuffer) :_fbo(pFrameBuffer)
 
 
 WaterMaterial::~WaterMaterial() {
-	glDisable(GL_BLEND);
 }
 
 void WaterMaterial::_lazyInitializeShader()
@@ -143,11 +142,11 @@ void WaterMaterial::render(World * pWorld, Mesh * pMesh, const glm::mat4 & pMode
 	glUniformMatrix4fv(_shader->getUniformLocation("modelMatrix"), 1, GL_FALSE, glm::value_ptr(pModelMatrix));  
 	 
 	//pass in a precalculate mvp matrix (see texture material for the opposite)
-	glm::mat4 mvpMatrix = pProjectionMatrix * pViewMatrix * pModelMatrix;
-	glUniformMatrix4fv(_uMVPMatrix, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
+	//glm::mat4 mvpMatrix = pProjectionMatrix * pViewMatrix * pModelMatrix;
+	//glUniformMatrix4fv(_uMVPMatrix, 1, GL_FALSE, glm::value_ptr(mvpMatrix));
 
-	glUniform1f(_shader->getUniformLocation("time"), glm::float1(std::clock() / 1500.0f));
-	glUniform1i(_shader->getUniformLocation("numWaves"), 8);
+	//glUniform1f(_shader->getUniformLocation("time"), glm::float1(std::clock() / 1500.0f));
+	//glUniform1i(_shader->getUniformLocation("numWaves"), 8);
 	/* 
 	for (int i = 0; i < 8; ++i)
 	{
@@ -167,11 +166,9 @@ void WaterMaterial::render(World * pWorld, Mesh * pMesh, const glm::mat4 & pMode
 		glUniform1f(_shader->getUniformLocation("speed[" + std::to_string(i) + "]"), glm::float1(speed));
 	}
 	*/
-	glm::vec3 eyePos = pWorld->getMainCamera()->getWorldPosition();
-	glUniform3f(_shader->getUniformLocation("eyePos"), glm::float1(eyePos.x), glm::float1(eyePos.y), glm::float1(eyePos.z));
-	
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glm::vec3 eyePos = pWorld->getMainCamera()->getWorldPosition();
+	//glUniform3f(_shader->getUniformLocation("eyePos"), glm::float1(eyePos.x), glm::float1(eyePos.y), glm::float1(eyePos.z));
+
 	//now inform mesh of where to stream its data
 	pMesh->streamToOpenGL(_aVertex, _aNormal, _aUV);
 	

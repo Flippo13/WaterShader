@@ -96,7 +96,7 @@ void main( void ) {
 	vec2 totalDistortion = (texture(dudvMap, distortedTexCoord).rg * 2.0 - 1.0) * waveStrength;// * clamp(waterDepth / 50.0,0.0,1.0);
 
     refractTexCoords += totalDistortion;
-	reflectTexCoords += totalDistortion;
+	//reflectTexCoords += totalDistortion;
 
     vec4 reflectColor = texture(reflectionTexture, reflectTexCoords);
 	vec4 refractColor = texture(refractionTexture, refractTexCoords);
@@ -107,13 +107,13 @@ void main( void ) {
 	vec3 normal = vec3(normalMapColor.r * 2.0 - 1.0, normalMapColor.g * 3.0, normalMapColor.b * 2.0 - 1.0);
 	normal = normalize(normal);
 
-	//vec3 viewDir = normalize(eyePos - worldPos.xyz);
+	vec3 viewDir = normalize(eyePos - worldPos.xyz);
 
 	vec3 viewVector = normalize(toCameraVector);
 	float refractiveFactor = dot(viewVector, normal);
 	refractiveFactor = pow(refractiveFactor, 0.5);
 
-	vec3 lightResult = CalcDirectLight(directLight, normal, viewVector); 
+	vec3 lightResult = CalcDirectLight(directLight, normal, viewDir); 
 
 	for(int i = 0; i < numLights && i < MAX_POINT_LIGHTS; i++) {
 		//lightResult += CalcPointLight(pointLights[i], normal, worldPos.xyz, viewVector);
@@ -125,10 +125,10 @@ void main( void ) {
 	//specular = pow(specular, shineDamper); 
 	vec3 specularHighlights = lightResult * reflectivity;//  * specular * reflectivity;// * clamp(waterDepth / 50.0,0.0,1.0); 
 
-	//fragment_color = mix(reflectColor, refractColor,refractiveFactor);
-	fragment_color = vec4(refractColor);
-	//fragment_color = mix(fragment_color, vec4(0.0,0.2,0.5, 1.0),0.2) + vec4(specularHighlights, 0.0);
+	fragment_color = mix(reflectColor, refractColor,refractiveFactor);
+	fragment_color = mix(fragment_color, vec4(0.0,0.2,0.5, 1.0),0.2) + vec4(specularHighlights, 0.0);
+	//fragment_color = vec4(reflectColor);
 
-	//fragment_color.a = clamp(waterDepth / 5.0,0.0,1.0); 
+	fragment_color.a = clamp(waterDepth / 5.0,0.0,1.0); 
 	//fragment_color = vec4(waterDepth/50.0);
 }

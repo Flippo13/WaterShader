@@ -114,6 +114,8 @@ Registering light light32
 Registering light light33
 Registering light light
 
+
+Engine initialized.
 Engine initialized.
 
 Initializing HUD
@@ -123,7 +125,7 @@ NUM 1	0.000124641
 NUM 2	0.00189274
 NUM 3	0.00191788
 NUM 4	0.00185942
-NUM 5	0.00187
+NUM 5	0.00187000
 NUM 6	0.0018599
 NUM 7	0.00185602
 NUM 8	0.00163963
